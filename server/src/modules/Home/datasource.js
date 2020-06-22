@@ -44,6 +44,7 @@ class ProductsApi extends RESTDataSource {
             .text();
 
           return {
+            id: i,
             name,
             productUrl,
             featuresList,

@@ -6,8 +6,7 @@ const resolvers = {
           args
         );
 
-        console.log(flipkartResults);
-        return {};
+        return { flipkartResults };
       } catch (e) {
         return e;
       }

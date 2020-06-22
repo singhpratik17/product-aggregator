@@ -4,6 +4,16 @@ const typeDef = gql`
   type Product {
     id: String
     name: String
+    productUrl: String
+    featuresList: [String]
+    price: String
+    originalPrice: String
+    offerText: String
+  }
+
+  type Result {
+    flipkartResults: [Product]
+    amazonResults: [Product]
   }
 
   extend type Query {
@@ -11,7 +21,7 @@ const typeDef = gql`
   }
 
   extend type Mutation {
-    searchProducts(searchText: String!): [Product]
+    searchProducts(searchText: String!): Result
   }
 `;
 
