@@ -5,13 +5,13 @@ const typeDef = gql`
     id: String
     name: String
   }
-  
+
   extend type Query {
-      init: Boolean
+    init: Boolean
   }
-  
+
   extend type Mutation {
-      searchProducts(searchText: String!): Product
+    searchProducts(searchText: String!): [Product]
   }
 `;
 
