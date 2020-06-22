@@ -1,16 +1,17 @@
 const { gql } = require('apollo-server-express');
 
 const typeDef = gql`
-  type UserAccount {
+  type Product {
     id: String
     name: String
-    phone: String
-    status: String
-    dob: Date
   }
   
-  type Query {
-    userAccount: UserAccount
+  extend type Query {
+      init: Boolean
+  }
+  
+  extend type Mutation {
+      searchProducts(searchText: String!): Product
   }
 `;
 

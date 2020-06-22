@@ -5,11 +5,12 @@ import { Paths } from './routePaths';
 /**
  * Import Containers here
  */
-import Temp from '../containers/Temp';
+import Home from '../containers/Home';
+
 
 const Routes = () => (
   <Switch>
-    <Route path={Paths.Temp} component={Temp} />
+    <Route path={Paths.Home} component={Home} />
   </Switch>
 );
 

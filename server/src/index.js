@@ -9,7 +9,7 @@ require('dotenv').config({
 /*
   All api modules here
  */
-const temp = require('./modules/Temp');
+const home = require('./modules/Home');
 
 const configurations = {
   development: { ssl: false, port: 8081, hostname: 'localhost' }
@@ -24,11 +24,13 @@ const app = express();
  */
 const typeDef = gql`
   scalar Date
+  type Query
+  type Mutation
 `;
 
 const apollo = new ApolloServer({
-  typeDefs: [typeDef, temp.typeDef],
-  resolvers: [temp.resolvers],
+  typeDefs: [typeDef, home.typeDef],
+  resolvers: [home.resolvers],
   dataSources: () => {
     return {};
   },

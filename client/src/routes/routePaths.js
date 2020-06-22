@@ -3,7 +3,7 @@
  */
 
 const Paths = {
-  Temp: '/',
+  Home: '/',
 };
 
 
