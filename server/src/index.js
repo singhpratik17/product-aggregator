@@ -11,6 +11,11 @@ require('dotenv').config({
  */
 const home = require('./modules/Home');
 
+/*
+  All datasources
+ */
+const ProductApi = require('./modules/Home/datasource');
+
 const configurations = {
   development: { ssl: false, port: 8081, hostname: 'localhost' }
 };
@@ -32,7 +37,9 @@ const apollo = new ApolloServer({
   typeDefs: [typeDef, home.typeDef],
   resolvers: [home.resolvers],
   dataSources: () => {
-    return {};
+    return {
+      productApi: new ProductApi()
+    };
   },
   context: async ({ req }) => {
     return {};
