@@ -4,19 +4,31 @@ const cheerio = require('cheerio');
 class ProductsApi extends RESTDataSource {
   constructor() {
     super();
-    this.flipkartBase = `https://www.flipkart.com`;
+    this.flipkartBaseUrl = `https://www.flipkart.com`;
+    this.amazonBaseUrl = `https://www.amazon.in`;
+  }
+
+  willSendRequest(request) {
+    request.headers.set(
+      'User-Agent',
+      'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.90 Safari/537.36'
+    );
   }
 
   async getProductsFromFlipkart({ searchText }) {
     try {
-      const url = `${this.flipkartBase}/search?q=${searchText}`;
+      const url = `${this.flipkartBaseUrl}/search?q=${searchText}`;
       const response = await this.get(url);
       const $ = cheerio.load(response);
 
       return $('._3O0U0u div div a')
         .map((i, element) => {
-          const productUrl = `${this.flipkartBase}` + $(element).attr('href');
-          // const imageUrl = $(element.children[0]).find('img').attr('src');
+          const productUrl =
+            `${this.flipkartBaseUrl}` + $(element).attr('href');
+
+          // const imageUrl = $(element.children[0]).find('._1Nyybr');
+          // console.log(i, imageUrl);
+
           const name = $(element.children[1])
             .find('._3wU53n')
             .text();
@@ -44,13 +56,59 @@ class ProductsApi extends RESTDataSource {
             .text();
 
           return {
-            id: i,
+            id: `${i}-Flip`,
             name,
             productUrl,
             featuresList,
             price,
             originalPrice,
             offerText
+          };
+        })
+        .get();
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  async getProductsFromAmazon({ searchText }) {
+    try {
+      const url = `${this.amazonBaseUrl}/search/s?k=${searchText}`;
+      const response = await this.get(url, {}, {});
+      const $ = cheerio.load(response);
+
+      return $('.s-result-item')
+        .find('.celwidget div .a-section')
+        .has('.a-section')
+        .not('.a-spacing-none')
+        .map((i, element) => {
+          const imgUrl = $(element)
+            .find('img')
+            .attr('src');
+
+          const name = $(element)
+            .find('h2 a span')
+            .html();
+
+          const productUrl = $(element)
+            .find('h2 a')
+            .attr('href');
+
+          const price = $(element)
+            .find('.a-price-whole')
+            .text();
+
+          const originalPrice = $(element)
+            .find('.a-text-price .a-offscreen')
+            .text();
+
+          return {
+            id: `${i}-Amz`,
+            name,
+            imgUrl,
+            price: `₹${price}`,
+            originalPrice,
+            productUrl: `${this.amazonBaseUrl}${productUrl}`
           };
         })
         .get();

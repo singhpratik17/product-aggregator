@@ -6,7 +6,11 @@ const resolvers = {
           args
         );
 
-        return { flipkartResults };
+        const amazonResults = await dataSources.productApi.getProductsFromAmazon(
+          args
+        );
+
+        return { flipkartResults, amazonResults };
       } catch (e) {
         return e;
       }

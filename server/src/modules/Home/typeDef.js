@@ -9,6 +9,7 @@ const typeDef = gql`
     price: String
     originalPrice: String
     offerText: String
+    imgUrl: String
   }
 
   type Result {
