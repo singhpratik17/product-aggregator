@@ -7,6 +7,7 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import { useMutation } from '@apollo/react-hooks';
 import { SEARCH_PRODUCTS } from './mutations';
 import ProductList from './components/ProductList';
+import Loader from '../../components/Loader';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -37,27 +38,31 @@ const Home = () => {
         handleSearchChange={val => setSearchText(val)}
         handleSearchSubmit={handleSearchSubmit}
       />
-      {!loading && !error && data ? (
-        <Grid
-          container
-          item
-          className={classes.container}
-          alignItems={'flex-start'}
-          spacing={2}>
-          <Grid container item xs={12} md={6} direction={'column'}>
-            <Grid>
-              <Typography variant={'h2'}>Amazon</Typography>
+      {!loading ? (
+        !error && data ? (
+          <Grid
+            container
+            item
+            className={classes.container}
+            alignItems={'flex-start'}
+            spacing={2}>
+            <Grid container item xs={12} md={6} direction={'column'}>
+              <Grid>
+                <Typography variant={'h2'}>Amazon</Typography>
+              </Grid>
+              <ProductList data={data.searchProducts?.amazonResults || []} />
             </Grid>
-            <ProductList data={data.searchProducts?.amazonResults || []} />
-          </Grid>
-          <Grid container item xs={12} md={6} direction={'column'}>
-            <Grid>
-              <Typography variant={'h2'}>Flipkart</Typography>
+            <Grid container item xs={12} md={6} direction={'column'}>
+              <Grid>
+                <Typography variant={'h2'}>Flipkart</Typography>
+              </Grid>
+              <ProductList data={data.searchProducts?.flipkartResults || []} />
             </Grid>
-            <ProductList data={data.searchProducts?.flipkartResults || []} />
           </Grid>
-        </Grid>
-      ) : null}
+        ) : null
+      ) : (
+        <Loader />
+      )}
     </>
   );
 };
