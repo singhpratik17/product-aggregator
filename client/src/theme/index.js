@@ -22,6 +22,10 @@ export const muiTheme = createMuiTheme({
       root: {
         height: '122px',
         flexDirection: 'column'
+      },
+      gutters: {
+        paddingLeft: 0,
+        paddingRight: 0
       }
     },
     MuiOutlinedInput: {

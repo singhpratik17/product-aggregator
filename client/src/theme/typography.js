@@ -29,18 +29,6 @@ export const typography = {
     paddingBottom: '4px',
     letterSpacing: 'normal',
   },
-  subtitle1: {
-    fontSize: '1rem',
-    fontWeight: 500,
-    lineHeight: 'normal',
-    letterSpacing: 'normal',
-  },
-  subtitle2: {
-    fontSize: '0.875rem',
-    fontWeight: 500,
-    lineHeight: 'normal',
-    letterSpacing: 'normal',
-  },
   body1: {
     fontSize: '1rem',
     fontWeight: 'normal',

@@ -90,7 +90,7 @@ class ProductsApi extends RESTDataSource {
 
           const name = $(element)
             .find('h2 a span')
-            .html();
+            .text();
 
           const productUrl = $(element)
             .find('h2 a')
