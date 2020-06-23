@@ -7,7 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import AppBar from '@material-ui/core/AppBar/AppBar';
 
-const Header = ({handleSearchSubmit, handleSearchChange}) => {
+const Header = ({ handleSearchSubmit, handleSearchChange }) => {
   return (
     <AppBar position="fixed">
       <Toolbar>
@@ -16,6 +16,12 @@ const Header = ({handleSearchSubmit, handleSearchChange}) => {
           placeholder="Search"
           id="search-products"
           variant="outlined"
+          autoFocus={true}
+          onKeyDown={evt => {
+            if (evt.keyCode === 13) {
+              handleSearchSubmit();
+            }
+          }}
           onChange={evt => handleSearchChange(evt.target.value)}
           InputProps={{
             endAdornment: (
@@ -32,7 +38,7 @@ const Header = ({handleSearchSubmit, handleSearchChange}) => {
         />
       </Toolbar>
     </AppBar>
-  )
+  );
 };
 
 export default Header;

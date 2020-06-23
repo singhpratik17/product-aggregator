@@ -8,6 +8,7 @@ import { useMutation } from '@apollo/react-hooks';
 import { SEARCH_PRODUCTS } from './mutations';
 import ProductList from './components/ProductList';
 import Loader from '../../components/Loader';
+import Message from '../../components/Message';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -20,16 +21,25 @@ const Home = () => {
   const classes = useStyles();
 
   const [searchText, setSearchText] = useState('');
+  const [fetchedText, setFetchedText] = useState('');
 
-  const [search, { data, loading, error }] = useMutation(SEARCH_PRODUCTS);
+  const [search, { data, loading, error }] = useMutation(SEARCH_PRODUCTS, {
+    onError: () => {
+      return;
+    },
+    onCompleted: () => {
+      setFetchedText(searchText);
+    }
+  });
 
   const handleSearchSubmit = async () => {
-    await search({
-      variables: { searchText },
-      onError: () => {
-        return;
-      }
-    });
+    if (searchText.length && fetchedText !== searchText) {
+      await search({
+        variables: { searchText }
+      });
+    } else if (!searchText.length) {
+      Message.error('Please enter search query.');
+    }
   };
 
   return (
