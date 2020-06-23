@@ -12,12 +12,34 @@ export const muiTheme = createMuiTheme({
     ...typography
   },
   shape: {
-    borderRadius: 1
+    borderRadius: 3
   },
 
   // Component style overrides
 
-  overrides: {}
+  overrides: {
+    MuiToolbar: {
+      root: {
+        height: '122px',
+        flexDirection: 'column'
+      }
+    },
+    MuiOutlinedInput: {
+      root: {
+        borderRadius: '35px',
+        backgroundColor: colors.primary.light,
+        color: colors.grey[200],
+        padding: defaultTheme.spacing(0,2)
+      }
+    },
+    MuiInputBase: {
+      root: {
+        '@media (min-width: 900px)': {
+          minWidth: '520px',
+        }
+      },
+    },
+  }
 });
 
 export default muiTheme;

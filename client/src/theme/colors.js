@@ -11,10 +11,11 @@ export const colors = {
     default: '#fff'
   },
   primary: {
-    main: '#5a1f2a',
+    main: '#1c2937',
+    light: '#2f3e4e'
   },
   secondary: {
-    main: '#e94b5b',
+    main: '#0087ff',
   },
   grey: {
     100: '#f0f0f0',
@@ -34,7 +35,7 @@ export const colors = {
     main: '#43a047'
   },
   info: {
-    main: '#0183eb'
+    main: '#0087ff'
   },
   text: {
     primary: '#2e2e2e',

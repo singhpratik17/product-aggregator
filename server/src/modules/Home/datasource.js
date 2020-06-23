@@ -26,18 +26,21 @@ class ProductsApi extends RESTDataSource {
           const productUrl =
             `${this.flipkartBaseUrl}` + $(element).attr('href');
 
+          // Getting a placeholder url.
           // const imageUrl = $(element.children[0]).find('._1Nyybr');
           // console.log(i, imageUrl);
 
           const name = $(element.children[1])
             .find('._3wU53n')
             .text();
-          const features = $(element.children[1]).find('li');
-          const featuresList = $(features)
-            .map((index, element) => {
-              return $(element).text();
-            })
-            .get();
+
+          // Not required.
+          // const features = $(element.children[1]).find('li');
+          // const featuresList = $(features)
+          //   .map((index, element) => {
+          //     return $(element).text();
+          //   })
+          //   .get();
 
           const price = $(element.children[1])
             .find('._6BWGkk div')
@@ -59,7 +62,6 @@ class ProductsApi extends RESTDataSource {
             id: `${i}-Flip`,
             name,
             productUrl,
-            featuresList,
             price,
             originalPrice,
             offerText
