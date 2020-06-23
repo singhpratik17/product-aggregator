@@ -6,6 +6,7 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles(theme => ({
   productImage: {
@@ -27,42 +28,53 @@ const ProductList = ({ data }) => {
   const classes = useStyles();
   return (
     <List>
-      {data.map(item => (
-        <React.Fragment key={item.id}>
-          <ListItem alignItems="flex-start">
-            <ListItemAvatar>
-              <img
-                alt={item.name}
-                className={classes.productImage}
-                src={
-                  item.imgUrl ||
-                  `https://via.placeholder.com/120x80?text=Not found`
+      {data.map(item =>
+        item.name && item.price ? (
+          <React.Fragment key={item.id}>
+            <ListItem alignItems="flex-start">
+              <ListItemAvatar>
+                <img
+                  alt={item.name}
+                  className={classes.productImage}
+                  src={
+                    item.imgUrl ||
+                    `https://via.placeholder.com/120x80?text=Not found`
+                  }
+                />
+              </ListItemAvatar>
+              <ListItemText
+                primary={
+                  item.name?.length > 90
+                    ? `${item.name.slice(0, 90)}...`
+                    : item.name
+                }
+                secondary={
+                  <React.Fragment>
+                    <Typography
+                      component="span"
+                      variant="body2"
+                      style={{ marginRight: 8 }}
+                      color="textPrimary">
+                      {item.price}
+                    </Typography>
+                    <s>{item.originalPrice}</s>
+                  </React.Fragment>
                 }
               />
-            </ListItemAvatar>
-            <ListItemText
-              primary={
-                item.name?.length > 90
-                  ? `${item.name.slice(0, 90)}...`
-                  : item.name
-              }
-              secondary={
-                <React.Fragment>
-                  <Typography
-                    component="span"
-                    variant="body2"
-                    style={{marginRight: 8}}
-                    color="textPrimary">
-                    {item.price}
-                  </Typography>
-                  <s>{item.originalPrice}</s>
-                </React.Fragment>
-              }
-            />
-          </ListItem>
-          <Divider />
-        </React.Fragment>
-      ))}
+              <Button
+                href={item.productUrl}
+                variant="contained"
+                color={'primary'}
+                size={'small'}
+                disableElevation
+                target={'_blank'}>
+                Buy
+              </Button>
+            </ListItem>
+            <Divider />
+          </React.Fragment>
+        ) : null
+      )}
     </List>
   );
 };

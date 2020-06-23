@@ -21,53 +21,84 @@ class ProductsApi extends RESTDataSource {
       const response = await this.get(url);
       const $ = cheerio.load(response);
 
-      return $('._3O0U0u div div a')
-        .map((i, element) => {
-          const productUrl =
-            `${this.flipkartBaseUrl}` + $(element).attr('href');
+      if ($('div').hasClass('_3liAhj')) {
+        return $('._3liAhj')
+          .map((i, element) => {
+            const productUrl =
+              `${this.flipkartBaseUrl}` + $(element.children[0]).attr('href');
 
-          // Getting a placeholder url.
-          // const imageUrl = $(element.children[0]).find('._1Nyybr');
-          // console.log(i, imageUrl);
+            const name = $(element.children[1]).text();
 
-          const name = $(element.children[1])
-            .find('._3wU53n')
-            .text();
+            const price = $(element.children[4])
+              .find('._1Vfi6u div')
+              .children()
+              .eq(0)
+              .text();
 
-          // Not required.
-          // const features = $(element.children[1]).find('li');
-          // const featuresList = $(features)
-          //   .map((index, element) => {
-          //     return $(element).text();
-          //   })
-          //   .get();
+            const originalPrice = $(element.children[4])
+              .find('._1Vfi6u div')
+              .children()
+              .eq(1)
+              .text();
 
-          const price = $(element.children[1])
-            .find('._6BWGkk div')
-            .children()
-            .eq(0)
-            .text();
-          const originalPrice = $(element.children[1])
-            .find('._6BWGkk div')
-            .children()
-            .eq(1)
-            .text();
-          const offerText = $(element.children[1])
-            .find('._6BWGkk div')
-            .children()
-            .eq(2)
-            .text();
+            return {
+              id: `${i}-Flip`,
+              name,
+              productUrl,
+              price,
+              originalPrice
+            };
+          })
+          .get();
+      } else {
+        return $('._3O0U0u a')
+          .map((i, element) => {
+            const productUrl =
+              `${this.flipkartBaseUrl}` + $(element).attr('href');
 
-          return {
-            id: `${i}-Flip`,
-            name,
-            productUrl,
-            price,
-            originalPrice,
-            offerText
-          };
-        })
-        .get();
+            // Getting a placeholder url.
+            // const imageUrl = $(element.children[0]).find('._1Nyybr');
+            // console.log(i, imageUrl);
+
+            const name = $(element.children[1])
+              .find('._3wU53n')
+              .text();
+
+            // Not required.
+            // const features = $(element.children[1]).find('li');
+            // const featuresList = $(features)
+            //   .map((index, element) => {
+            //     return $(element).text();
+            //   })
+            //   .get();
+
+            // const offerText = $(element.children[1])
+            //   .find('._6BWGkk div')
+            //   .children()
+            //   .eq(2)
+            //   .text();
+
+            const price = $(element.children[1])
+              .find('._6BWGkk div')
+              .children()
+              .eq(0)
+              .text();
+            const originalPrice = $(element.children[1])
+              .find('._6BWGkk div')
+              .children()
+              .eq(1)
+              .text();
+
+            return {
+              id: `${i}-Flip`,
+              name,
+              productUrl,
+              price,
+              originalPrice
+            };
+          })
+          .get();
+      }
     } catch (e) {
       throw e;
     }
