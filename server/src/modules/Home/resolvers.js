@@ -1,8 +1,9 @@
 const resolvers = {
-  query: {
+  Query: {
     fetchProductDetails: async (root, args, { dataSources }) => {
       try {
-        return await dataSources.productApi.fetchProductDetails(args);
+        const result = await dataSources.productApi.fetchProductDetails(args);
+        return {features: result};
       } catch (e) {
         return e;
       }

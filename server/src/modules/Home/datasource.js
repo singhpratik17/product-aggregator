@@ -155,11 +155,19 @@ class ProductsApi extends RESTDataSource {
       const response = await this.get(url, {}, {});
       const $ = cheerio.load(response);
 
+      if (url.includes('amazon')) {
+        return $('#feature-bullets')
+          .find('li')
+          .map((index, element) => {
+            return $(element)
+              .find('span')
+              .text();
+          }).get();
+      }
     } catch (e) {
       throw e;
     }
   }
-
 }
 
 module.exports = ProductsApi;
