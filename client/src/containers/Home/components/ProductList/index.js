@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ProductList = ({ data }) => {
+const ProductList = ({ data, handleBuyClick }) => {
   const classes = useStyles();
   return (
     <List>
@@ -62,12 +62,11 @@ const ProductList = ({ data }) => {
                 }
               />
               <Button
-                href={item.productUrl}
+                onClick={() => handleBuyClick(item.productUrl)}
                 variant="contained"
                 color={'primary'}
                 size={'small'}
-                disableElevation
-                target={'_blank'}>
+                disableElevation>
                 Buy
               </Button>
             </ListItem>
