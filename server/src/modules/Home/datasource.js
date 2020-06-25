@@ -149,6 +149,17 @@ class ProductsApi extends RESTDataSource {
       throw e;
     }
   }
+
+  async fetchProductDetails({ url }) {
+    try {
+      const response = await this.get(url, {}, {});
+      const $ = cheerio.load(response);
+
+    } catch (e) {
+      throw e;
+    }
+  }
+
 }
 
 module.exports = ProductsApi;

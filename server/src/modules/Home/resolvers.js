@@ -1,4 +1,13 @@
 const resolvers = {
+  query: {
+    fetchProductDetails: async (root, args, { dataSources }) => {
+      try {
+        return await dataSources.productApi.fetchProductDetails(args);
+      } catch (e) {
+        return e;
+      }
+    }
+  },
   Mutation: {
     searchProducts: async (root, args, { dataSources }) => {
       try {

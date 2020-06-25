@@ -11,6 +11,10 @@ const typeDef = gql`
     offerText: String
     imgUrl: String
   }
+  
+  type ProductDetails {
+      features: [String]
+  }
 
   type Result {
     flipkartResults: [Product]
@@ -18,7 +22,7 @@ const typeDef = gql`
   }
 
   extend type Query {
-    init: Boolean
+    fetchProductDetails(url: String!): ProductDetails
   }
 
   extend type Mutation {
